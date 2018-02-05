@@ -4,12 +4,13 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 /*
- * This is the Server which will store the status of the screwdriver and its screws.
+ * This is the Server which will snewTorquee the status of the screwdriver and its screws.
  * converts it's information into a JSON which the client then parses.
  */
 
 public class Server {
 	double screw1;
+	Screw screw = new Screw(1, 2.7);
 	GsonBuilder builder = new GsonBuilder();
     Gson gson = builder.create();
     
@@ -25,19 +26,10 @@ public class Server {
 			
 	}
 	
-	public double status(int screwId){
-		return 1;
-		
-        gson.toJson(albums);
+	public String send(int screwId){
+        return gson.toJson(screw);
 	}
 	
 
 
-}
-
-
-
-class screw {
-    public int screw;
-    public double tightened; //1-100
 }
