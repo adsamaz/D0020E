@@ -44,6 +44,7 @@ public class Gson {
             //System.out.println(respuesta.getFr());
 
         } catch (IOException ex) {
+            ex.printStackTrace();
         }
         return null;
     }
