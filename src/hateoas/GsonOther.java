@@ -1,25 +1,18 @@
 package hateoas;
 
-import java.io.IOException;
-
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
-
-import org.json.JSONException;
-
 import org.json.JSONObject;
-
 import org.json.XML;
 
-public class Gson {
+import java.io.IOException;
 
+public class GsonOther {
     public static void main(String[] args) {
-    	 new Gson().http("http://130.240.5.102:8045/servicediscovery/service", " ");
+        new GsonOther().http("http://130.240.5.102:8045/servicediscovery/service", " ");
     }
 
     public HttpResponse http(String url, String body) {
@@ -33,14 +26,14 @@ public class Gson {
             HttpResponse result = httpClient.execute(request);
             String xmlResponse = EntityUtils.toString(result.getEntity(), "UTF-8");
             JSONObject xmlJSONObj = XML.toJSONObject(xmlResponse);
-            
+
             String jsonPrettyPrintString = xmlJSONObj.toString(4);
-            
+
             //com.google.gson.Gson gson = new com.google.gson.Gson();
             //Response respuesta = gson.fromJson(jsonPrettyPrintString, Response.class);
-            
+
             System.out.println(jsonPrettyPrintString);
-           // System.out.println(respuesta.getExample());
+            // System.out.println(respuesta.getExample());
             //System.out.println(respuesta.getFr());
 
         } catch (IOException ex) {
