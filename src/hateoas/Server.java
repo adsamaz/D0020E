@@ -13,8 +13,15 @@ public class Server {
 	Screw screw = new Screw(1, 2.7);
 	GsonBuilder builder = new GsonBuilder();
     Gson gson = builder.create();
+    boolean Connected = false;
     
 	public Server (){
+		
+		
+	}
+	
+	public void connectToProvider() {
+		Connected = true;
 		
 	}
 	

@@ -14,9 +14,9 @@ class Screw {
     
 	public void changeTorque(int Id, double newTighten) {
 	    	
-	    	if(Id==screwId) {
+	    	if(Id==screwId && (newTighten >= 0 && newTighten <= 100)) {
 	    		Tightened = newTighten;
-	    		}
+	    	}
 	    	
 	}
 

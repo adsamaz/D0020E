@@ -9,9 +9,15 @@ import com.google.gson.GsonBuilder;
  * some sort.
  */
 
-
 public class Client {
 	
 	
+
+	public static void main(String[] args) {
+		
+		Server server = new Server();
+		server.connectToProvider();
+
+	}
 
 }
