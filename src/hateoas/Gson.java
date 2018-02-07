@@ -19,7 +19,7 @@ import org.json.XML;
 public class Gson {
 
     public static void main(String[] args) {
-    	 new Gson().http("http://127.0.0.1:8045/servicediscovery/service", " ");
+    	 new Gson().http("http://130.240.5.102:8045/servicediscovery/service", " ");
     }
 
     public HttpResponse http(String url, String body) {

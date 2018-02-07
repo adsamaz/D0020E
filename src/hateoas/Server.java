@@ -20,8 +20,9 @@ public class Server {
 		
 	}
 	
-	public void connectToProvider() {
+	public String connectToProvider() {
 		Connected = true;
+		return gson.toJson(screw);
 		
 	}
 	

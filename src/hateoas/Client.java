@@ -17,7 +17,8 @@ public class Client {
 		
 		Server server = new Server();
 		server.connectToProvider();
-
+		
+		
 	}
 
 }
