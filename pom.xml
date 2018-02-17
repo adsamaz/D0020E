@@ -34,5 +34,10 @@
       <artifactId>httpclient</artifactId>
       <version>4.5.5</version>
     </dependency>
+    <dependency>
+    	<groupId>org.springframework.hateoas</groupId>
+    	<artifactId>spring-hateoas</artifactId>
+    	<version>0.24.0.RELEASE</version>
+    </dependency>
   </dependencies>
 </project>
