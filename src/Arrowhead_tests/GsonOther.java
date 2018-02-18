@@ -1,4 +1,4 @@
-package hateoas;
+package Arrowhead_tests;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -48,9 +48,9 @@ public class GsonOther {
     	
     	String serviceName = "simpleservicediscovery";
     	
-       // new GsonOther().http("http://130.240.5.102:8045/servicediscovery/service", " ", "get"); //GET ALL SERVICES
+        new GsonOther().http("http://130.240.5.102:8045/servicediscovery/service", " ", "get"); //GET ALL SERVICES
     	// new GsonOther().http("http://130.240.5.102:8045/servicediscovery/service/"+serviceName, "", "get"); //GET SERVICE BY NAME
-        new GsonOther().http("http://130.240.5.102:8045/servicediscovery/publish", bodyPublish, "post"); //PUBLISH
+       // new GsonOther().http("http://130.240.5.102:8045/servicediscovery/publish", bodyPublish, "post"); //PUBLISH
        //new GsonOther().http("http://130.240.5.102:8045/servicediscovery/unpublish", bodyUnPublish, "post"); //UNPUBLISH
        
     }
