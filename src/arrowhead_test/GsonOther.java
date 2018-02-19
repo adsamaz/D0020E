@@ -1,4 +1,4 @@
-package Arrowhead_tests;
+package arrowhead_test;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
