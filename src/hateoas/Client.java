@@ -1,4 +1,5 @@
 package hateoas;
+import org.springframework.hateoas.*;
 
 /*
  * The client receives the JSON which stores the index of available options for the client.
@@ -8,13 +9,12 @@ package hateoas;
 
 public class Client {
 	
+	Link link = new Link("http://localhost:8080/something");
+
 	
 
 	public static void main(String[] args) {
-		
-		Server server = new Server();
-		server.connectToProvider();
-		
+
 		
 	}
 

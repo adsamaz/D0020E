@@ -1,26 +1,30 @@
 package hateoas;
+import org.springframework.hateoas.*;
 
-class Screw {
-    int screwId;
-    double Tightened; //1-100
-    int status;
-    String[] links;
+
+public class Screw extends ResourceSupport {
+    public int screwId;
+    public double Tightened;
      
     //Konstruktor för att se till så att alla variabler är satta korrekt
-    public Screw(int Id, double newTighten) {
+    public Screw(int Id) {
+
+
     	screwId = Id;
-    	Tightened = newTighten; 
-    	status = 0;
+    	Tightened = 0.0; 
+    	this.add(new Link("/" + Id));
+
     	
     	//String[] links = ("screw/" + screwId + "/");
     	
     }
     
 	public void changeTorque(int Id, double newTighten) {
-	    	
+	    	/*
 	    	if(Id==screwId && (newTighten >= 0 && newTighten <= 100)) {
-	    		Tightened = newTighten;
+	    		tightened = newTighten;
 	    	}
+	    	*/
 	    	
 	}
 
