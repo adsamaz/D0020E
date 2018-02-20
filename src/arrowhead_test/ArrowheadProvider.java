@@ -14,32 +14,13 @@ import org.json.XML;
 
 public class ArrowheadProvider {
 	
-	//Strängen som publishar simpleservicediscovery
-	String bodyPublish = "<service>"+
-	 "<domain>docker.ahf</domain>"+
-	 "<host>130.240.113.2</host>"+
-	 "<name>Screwdriver_Provider</name>"+
-	 "<port>8092</port>"+
-	 "<properties>"+
-	    "<property>"+
-	      "<name>version</name>"+
-	       "<value>1.0</value>"+
-	    "</property>"+
-	    "<property>"+
-	       "<name>path</name>"+
-	       "<value>/root</value>"+
-	    "</property>"+
-	 "</properties>"+
-	 "<type>TestProvider</type>"+
-	"</service>";
-	
-	public String http(String url, String reqType) {
+	public String http(String url, String body, String reqType) {
 
         try (CloseableHttpClient httpClient = HttpClientBuilder.create().build()) {
         	//Post request
     		HttpPost request = new HttpPost(url);
     		request.addHeader("content-type", "application/xml");
-    		StringEntity params = new StringEntity(bodyPublish);
+    		StringEntity params = new StringEntity(body);
             request.setEntity(params);
             
             HttpResponse result = httpClient.execute(request);

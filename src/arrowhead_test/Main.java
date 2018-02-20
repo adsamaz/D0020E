@@ -8,37 +8,37 @@ import org.json.XML;
 
 public class Main {
 	public static void main(String[] args) {
-    	
-    	//Strängen som publishar simpleservicediscovery
-    	/*String bodyPublish = "<service>"+
-    	 "<domain>docker.ahf.</domain>"+
-    	 "<host>simpleservicediscovery.docker.ahf.</host>"+
-    	 "<name>simpleservicediscovery</name>"+
-    	 "<port>8045</port>"+
-    	 "<properties>"+
-    	    "<property>"+
-    	      "<name>version</name>"+
-    	       "<value>1.0</value>"+
-    	    "</property>"+
-    	    "<property>"+
-    	       "<name>path</name>"+
-    	       "<value>/servicediscovery</value>"+
-    	    "</property>"+
-    	 "</properties>"+
-    	 "<type>_ssd-s-ws-http._tcp</type>"+
-    	"</service>";*/
+		
+		//Strängen som publishar provider
+		String bodyPublish = "<service>"+
+		 "<domain>docker.ahf.</domain>"+
+		 "<host>130.240.113.2</host>"+
+		 "<name>provider</name>"+
+		 "<port>8045</port>"+
+		 "<properties>"+
+		    "<property>"+
+		      "<name>version</name>"+
+		       "<value>1.0</value>"+
+		    "</property>"+
+		    "<property>"+
+		       "<name>path</name>"+
+		       "<value>/provider</value>"+
+		    "</property>"+
+		 "</properties>"+
+		 "<type>_pvd-s-ws-http._tcp</type>"+
+		"</service>";
     	
     	//Strängen som unpublishar simpleservicediscovery
     	String bodyUnPublish = 
     	 "<service>"+
-    	 "<name>simpleservicediscovery._ssd-s-ws-http._tcp.srv.docker.ahf.</name>"+
+    	 "<name>provider</name>"+
     	 "</service>";
     	
-    	String serviceName = "simpleservicediscovery";
+    	String serviceName = "provider";
     	
         //String response = new ArrowheadConsumer().http("http://130.240.5.102:8045/servicediscovery/service", " ", "get"); //GET ALL SERVICES
-    	//String response = new ArrowheadConsumer().http("http://130.240.5.102:8045/servicediscovery/service/"+serviceName, "", "get"); //GET SERVICE BY NAME
-    	String response = new ArrowheadProvider().http("http://130.240.5.102:8045/servicediscovery/publish", "post"); //PUBLISH
+    	String response = new ArrowheadConsumer().http("http://130.240.5.102:8045/servicediscovery/service/"+serviceName, "", "get"); //GET SERVICE BY NAME
+    	//String response = new ArrowheadProvider().http("http://130.240.5.102:8045/servicediscovery/publish", bodyPublish, "post"); //PUBLISH
     	//String response = new ArrowheadProvider().http("http://130.240.5.102:8045/servicediscovery/unpublish", bodyUnPublish, "post"); //UNPUBLISH
        
         System.out.println(xmlToJson(response));

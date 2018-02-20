@@ -25,6 +25,7 @@ public class ArrowheadConsumer {
     		String xmlResponse = EntityUtils.toString(result.getEntity(), "UTF-8");
  			return xmlResponse;
 
+
         } catch (IOException ex) {
             ex.printStackTrace();
         }
