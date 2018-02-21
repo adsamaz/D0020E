@@ -9,6 +9,7 @@ public class Screws extends ResourceSupport {
     private transient Screw[] screws;
 
     public Screws(int numOfScrews) {
+    	this.add(new Link("/screws"));
         this.initScrews(numOfScrews);
     }
 
@@ -22,5 +23,18 @@ public class Screws extends ResourceSupport {
 
     public static Link getLink() {
         return link;
+    }
+    
+    public Screw getScrew (int screwId) {
+    	
+    	for (int i = 0; i < this.screws.length; i++) {
+    		if (screwId == this.screws[i].id) {
+    			return this.screws[screwId];
+
+    		}
+    	}
+    	
+    	return null;
+    	
     }
 }

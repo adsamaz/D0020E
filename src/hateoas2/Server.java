@@ -15,6 +15,7 @@ public class Server extends ResourceSupport {
     private transient Gson gson;
 
     private transient Screws screws;
+    
 
     public Server (){
         this.add(new Link("/"));
@@ -23,8 +24,10 @@ public class Server extends ResourceSupport {
         this.initGSON();
 
         this.screws = new Screws(5);
-
-        System.out.println(gson.toJson(screws));
+        
+        //System.out.println(gson.toJson(this));
+        //System.out.println(gson.toJson(screws));
+        System.out.println(gson.toJson(screws.getScrew(2)));
     }
 
     public static void main(String[] args) {
