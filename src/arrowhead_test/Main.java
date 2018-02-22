@@ -3,6 +3,7 @@ package arrowhead_test;
 import java.io.IOException;
 
 import org.apache.http.util.EntityUtils;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.XML;
 
@@ -41,7 +42,15 @@ public class Main {
     	//String response = new ArrowheadProvider().http("http://130.240.5.102:8045/servicediscovery/publish", bodyPublish, "post"); //PUBLISH
     	//String response = new ArrowheadProvider().http("http://130.240.5.102:8045/servicediscovery/unpublish", bodyUnPublish, "post"); //UNPUBLISH
        
-        System.out.println(xmlToJson(response));
+    	JSONObject json = XML.toJSONObject(response);
+    	
+    	String host = json.getJSONObject("service").getString("host");
+    	int port = json.getJSONObject("service").getInt("port");
+    	String path = json.getJSONObject("service").getJSONObject("properties").getJSONArray("property").getJSONObject(1).getString("value");
+    	String uri = host + ":" + port + path;
+        System.out.println(uri);
+        
+    	//System.out.println(xmlToJson(response));
     }
 	
 	public static String xmlToJson(String xmlResponse){
