@@ -11,53 +11,23 @@ import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
 
 public class ServerResponse {
-
-    public static void main(String[] args) throws Exception {
-        HttpServer server = HttpServer.create(new InetSocketAddress("localhost", 8000), 0);
-        server.createContext("/", new DefaultHandler());	//http://localhost:8000/
-        server.createContext("/test", new FirstHandler());	//obs allt efter /test gills, om det inte finns ett annat context för det t.ex /testfhdf gills.
-        server.createContext("/test/hej", new NextHandler()); 
-        server.setExecutor(null); //default executor
+	 HttpServer server;
+	 
+	 public ServerResponse (String address, int port) {
+    	try {
+			server = HttpServer.create(new InetSocketAddress(address, port), 0);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+    	
+    	createContext("/", "SecondPoint", "http://localhost:8000/second"); //Första addressen skapar json meddelande som hänvisar till nästa address 		
+    	createContext("/second", "StartPoint", "http://localhost:8000/"); //obs allt efter /second gills, om det inte finns ett annat context för det t.ex /secondfhdf gills.
+    	server.setExecutor(null); //default executor	
         server.start();
-    }
-
-    static class DefaultHandler implements HttpHandler {
-        public void handle(HttpExchange ex) throws IOException {
-        	String response = json("First","http://localhost:8000/test");
-            
-            ex.sendResponseHeaders(200, response.getBytes(Charset.forName("UTF-8")).length);
-            OutputStream os = ex.getResponseBody();
-            os.write(response.getBytes(Charset.forName("UTF-8")));
-            os.close();
-        }
-    }
+	 }
     
-    static class FirstHandler implements HttpHandler {
-        public void handle(HttpExchange ex) throws IOException {
-            String response = "First";
-            ex.sendResponseHeaders(200, response.getBytes(Charset.forName("UTF-8")).length);
-            OutputStream os = ex.getResponseBody();
-            os.write(response.getBytes(Charset.forName("UTF-8")));
-            os.close();
-        }
-    }
-    
-    static class NextHandler implements HttpHandler {
-        public void handle(HttpExchange ex) throws IOException {
-            String response = "Next";
-            ex.sendResponseHeaders(200, response.getBytes(Charset.forName("UTF-8")).length);
-            OutputStream os = ex.getResponseBody();
-            os.write(response.getBytes(Charset.forName("UTF-8")));
-            os.close();
-        }
-    }
-
-    public static String json(String type, String address) {
-        JsonObject obj = new JsonObject(type, address);
-		Gson gson = new Gson();
-		String json = gson.toJson(obj);
-		json = json + "\n";
-		return json;
+    private void createContext(String path, String type, String href) {
+    	server.createContext(path, new Handler(type, href));
     }
     
 }
