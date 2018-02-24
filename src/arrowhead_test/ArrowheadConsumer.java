@@ -14,7 +14,8 @@ import org.json.XML;
 
 public class ArrowheadConsumer {
 	
-	public String http(String url, String body, String reqType) {
+	
+	public String http(String url, String responseType) {
 
         try (CloseableHttpClient httpClient = HttpClientBuilder.create().build()) {
         	//Get request
@@ -23,12 +24,30 @@ public class ArrowheadConsumer {
     		
     		HttpResponse result = httpClient.execute(request);
     		String xmlResponse = EntityUtils.toString(result.getEntity(), "UTF-8");
- 			return xmlResponse;
-
-
+    		
+    		
+    		if(responseType == "URI"){
+    			JSONObject json = XML.toJSONObject(xmlResponse);
+            	String host = json.getJSONObject("service").getString("host");
+            	int port = json.getJSONObject("service").getInt("port");
+            	String path = json.getJSONObject("service").getJSONObject("properties").getJSONArray("property").getJSONObject(1).getString("value");
+            	String uri = host + ":" + port + path;
+                System.out.println(uri);
+    		}
+    		else{
+    			System.out.println(xmlToJson(xmlResponse));
+    		}
+    		
         } catch (IOException ex) {
             ex.printStackTrace();
         }
         return null;
     }
+	
+	//for whole json stringc
+	public static String xmlToJson(String xmlResponse){
+		JSONObject xmlJSONObj = XML.toJSONObject(xmlResponse);
+        String jsonPrettyPrintString = xmlJSONObj.toString(4);
+        return jsonPrettyPrintString;
+	}
 }
