@@ -19,21 +19,40 @@ public class Screw extends ResourceSupport {
         this.appliedTorqueNM = 0;
 
         this.link = new Link("/" + this.id, "" + this.id);
-        this.add(new Link("/" + this.id));
-        this.add(new Link("tighten"));
-        this.add(new Link("loosen"));
+        updateLinks();
     }
     
     public void tighten() {
-    	this.appliedTorqueNM = 100;
-    	this.observable.setChanged2();
-    	this.observable.notifyObservers();
+    	if (this.appliedTorqueNM != 100) {
+        	this.appliedTorqueNM = 100;
+        	updateLinks();
+        	this.observable.setChanged2();
+        	this.observable.notifyObservers();
+    	}
+
     }
     
     public void loosen() {
-    	this.appliedTorqueNM = 0;
-    	this.observable.setChanged2();
-    	this.observable.notifyObservers();
+    	if (this.appliedTorqueNM != 0) {
+        	this.appliedTorqueNM = 0;
+        	updateLinks();
+        	this.observable.setChanged2();
+        	this.observable.notifyObservers();
+    	}
+
+    }
+    
+    private void updateLinks() {
+		this.removeLinks();
+        this.add(new Link("/" + this.id));
+        
+    	if (this.appliedTorqueNM < 100) {
+    		this.add(new Link("tighten", "tighten"));
+    	} 
+    	
+    	if (this.appliedTorqueNM > 0) {
+    		this.add(new Link("loosen", "loosen"));
+    	}
     }
 
     public Link getLink() {

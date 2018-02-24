@@ -29,8 +29,13 @@ public class Server extends ResourceSupport {
         
         //System.out.println(gson.toJson(this));
         //System.out.println(gson.toJson(screws));
+        System.out.println(gson.toJson(screws.getScrew(2)));
         screws.getScrew(2).tighten();
-        System.out.println(gson.toJson(screws.getStatus()));
+        //System.out.println(gson.toJson(screws.getStatus()));
+        System.out.println(gson.toJson(screws.getScrew(2)));
+        screws.getScrew(2).loosen();
+        System.out.println(gson.toJson(screws.getScrew(2)));
+
 
     }
 
