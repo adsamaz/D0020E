@@ -15,22 +15,19 @@ public class ScrewStatus extends ResourceSupport implements Observer {
 	private static Link link = new Link("/screwstatus", "screwstatus");
 	
 	private transient Screw[] screwList;
-	//private double[] torque;
-	private Map<Integer, Double> torque2;
+	private Map<Integer, Double> torque;
 	
 	public ScrewStatus(Screw[] screwsArray) {
 		this.add(new Link("/screwstatus"));
 		this.add(new Link("/screws", "parent"));
 		screwList = screwsArray;
-		//torque = new double[this.screwList.length];
-		torque2 = new HashMap<Integer, Double>();
+		torque = new HashMap<Integer, Double>();
 		updateResults();
 	}
 	
 	public void updateResults () {
 		for(int i = 0; i < this.screwList.length; i++) {
-			//this.torque[i] = this.screwList[i].appliedTorqueNM;
-			this.torque2.put(this.screwList[i].id, this.screwList[i].appliedTorqueNM);
+			this.torque.put(this.screwList[i].id, this.screwList[i].appliedTorqueNM);
 		}
 		
 	}
@@ -42,8 +39,8 @@ public class ScrewStatus extends ResourceSupport implements Observer {
 	@Override
 	public void update(Observable arg0, Object arg1) {
 		updateResults();
-		
 	}
+
 	
 
 }

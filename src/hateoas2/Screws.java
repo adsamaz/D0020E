@@ -14,12 +14,13 @@ public class Screws extends ResourceSupport {
     	this.add(new Link("/screws"));
         this.initScrews(numOfScrews);
         this.status = new ScrewStatus(this.screws);
+        Screw.addObs(status);
     }
 
     private void initScrews(int numOfScrews) {
         this.screws = new Screw[numOfScrews];
         for (int i = 0; i < this.screws.length; i++) {
-            this.screws[i] = new Screw(this.status);
+            this.screws[i] = new Screw();
             this.add(this.screws[i].getLink());
         }
     }

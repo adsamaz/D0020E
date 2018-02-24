@@ -30,8 +30,8 @@ public class Server extends ResourceSupport {
         //System.out.println(gson.toJson(this));
         //System.out.println(gson.toJson(screws));
         screws.getScrew(2).tighten();
-        System.out.println(gson.toJson(screws.getScrew(2)));
         System.out.println(gson.toJson(screws.getStatus()));
+
     }
 
     public static void main(String[] args) {

@@ -1,21 +1,22 @@
 package hateoas2;
 
+import java.util.Observable;
+import java.util.Observer;
+
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.ResourceSupport;
 
 public class Screw extends ResourceSupport {
     private static int nextID = 0;
+    private static Observable2 observable = new Observable2();
     protected int id;
     protected double appliedTorqueNM;
     
-    private transient ScrewStatus status;
-
     private transient Link link;
 
-    public Screw(ScrewStatus status) {
+    public Screw() {
         this.id = nextID++;
         this.appliedTorqueNM = 0;
-        this.status = status;
 
         this.link = new Link("/" + this.id, "" + this.id);
         this.add(new Link("/" + this.id));
@@ -25,15 +26,21 @@ public class Screw extends ResourceSupport {
     
     public void tighten() {
     	this.appliedTorqueNM = 100;
-    	this.status.updateResults();
+    	this.observable.setChanged2();
+    	this.observable.notifyObservers();
     }
     
     public void loosen() {
     	this.appliedTorqueNM = 0;
-    	this.status.updateResults();
+    	this.observable.setChanged2();
+    	this.observable.notifyObservers();
     }
 
     public Link getLink() {
         return this.link;
+    }
+    
+    public static void addObs(Observer obs) {
+    	observable.addObserver(obs);
     }
 }
