@@ -13,13 +13,22 @@ import org.springframework.hateoas.ResourceSupport;
 public class ScrewStatus extends ResourceSupport implements Observer {
 	
 	private static Link link = new Link("/screwstatus", "screwstatus");
-	
+    private transient Link href;
+    private transient Link baseLink;
 	private transient Screw[] screwList;
 	private Map<Integer, Double> torque;
 	
-	public ScrewStatus(Screw[] screwsArray) {
-		this.add(new Link("/screwstatus"));
-		this.add(new Link("/screws", "parent"));
+	public ScrewStatus(Screw[] screwsArray, Link baseLink) {
+		this.baseLink = baseLink;
+    	if(baseLink.getHref().equals("/")) {
+    		this.href = new Link(this.link.getHref());
+    	} else {
+    		this.href = new Link(baseLink.getHref() + this.link.getHref());
+    	}
+    	this.add(this.href);
+    	
+		this.add(new Link(this.baseLink.getHref(), "parent"));
+		
 		screwList = screwsArray;
 		torque = new HashMap<Integer, Double>();
 		updateResults();

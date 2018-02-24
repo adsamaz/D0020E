@@ -11,14 +11,23 @@ public class Screw extends ResourceSupport {
     private static Observable2 observable = new Observable2();
     protected int id;
     protected double appliedTorqueNM;
+    private transient Link href;
+    private transient Link baseLink;
     
     private transient Link link;
 
-    public Screw() {
+    public Screw(Link baseLink) {
         this.id = nextID++;
         this.appliedTorqueNM = 0;
-
         this.link = new Link("/" + this.id, "" + this.id);
+
+        this.baseLink = baseLink;
+    	if(baseLink.getHref().equals("/")) {
+    		this.href = new Link(this.link.getHref());
+    	} else {
+    		this.href = new Link(baseLink.getHref() + this.link.getHref());
+    	}
+    	
         updateLinks();
     }
     
@@ -44,19 +53,29 @@ public class Screw extends ResourceSupport {
     
     private void updateLinks() {
 		this.removeLinks();
-        this.add(new Link("/" + this.id));
+		this.add(this.href);
+		this.add(new Link(this.baseLink.getHref(), "parent"));
         
     	if (this.appliedTorqueNM < 100) {
-    		this.add(new Link("tighten", "tighten"));
+    		this.add(new Link(this.href.getHref() + "/tighten", "tighten"));
     	} 
     	
     	if (this.appliedTorqueNM > 0) {
-    		this.add(new Link("loosen", "loosen"));
+    		this.add(new Link(this.href.getHref() + "/loosen", "loosen"));
+
     	}
     }
 
     public Link getLink() {
         return this.link;
+    }
+    
+    public Link getHref() {
+        return this.href;
+    }
+    
+    public int getId2() {
+    	return this.id;
     }
     
     public static void addObs(Observer obs) {
