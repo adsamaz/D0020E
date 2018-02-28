@@ -20,7 +20,9 @@ class Handler implements HttpHandler {
 	 }
 	 
     public void handle(HttpExchange ex) throws IOException {
-    	String response = gson.toJson(server);
+    	Gson gson = new Gson();
+		String response = gson.toJson(server);
+    	//String response = gson.toJson(server);
         
         ex.sendResponseHeaders(200, response.getBytes(Charset.forName("UTF-8")).length);
         OutputStream os = ex.getResponseBody();

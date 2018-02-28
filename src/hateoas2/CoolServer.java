@@ -9,7 +9,7 @@ import com.sun.net.httpserver.HttpServer;
 
 public class CoolServer {
 	
-	HttpServer server2;
+	HttpServer httpServer;
 	Server server;
 	
 	public CoolServer() {
@@ -17,21 +17,20 @@ public class CoolServer {
 		
 		this.server = new Server();
     	try {
-    		server2 = HttpServer.create(new InetSocketAddress("localhost", 8000), 0);
+    		httpServer = HttpServer.create(new InetSocketAddress("localhost", 8000), 0);
     	} catch (IOException e) {
     		e.printStackTrace();
     	}
        	
     	createContext(server.link); //Första addressen skapar json meddelande som hänvisar till nästa address 		
     	//createContext("/second", "StartPoint", "http://localhost:8000/"); //obs allt efter /second gills, om det inte finns ett annat context för det t.ex /secondfhdf gills.
-    	server2.setExecutor(null); //default executor	
-    	server2.start();
+    	httpServer.setExecutor(null); //default executor	
+    	httpServer.start();
     	
 	}
 	
     private void createContext(Link path) {
-    	System.out.println(path.getHref());
-    	server2.createContext(path.getHref(), new Handler(server));
+    	httpServer.createContext(path.getHref(), new Handler(server));
     }
     
     public static void main(String[] args) {
