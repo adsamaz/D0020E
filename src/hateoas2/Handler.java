@@ -15,14 +15,20 @@ class Handler implements HttpHandler {
 	 private transient GsonBuilder builder;
 	 private transient Gson gson;
 	 
+	 
+	 
 	 public Handler(Server server) {
 		 this.server = server;
+		 
+	 	this.builder = new GsonBuilder();
+        this.builder.setPrettyPrinting();
+        this.gson = this.builder.create();
 	 }
 	 
     public void handle(HttpExchange ex) throws IOException {
-    	Gson gson = new Gson();
-		String response = gson.toJson(server);
-    	//String response = gson.toJson(server);
+    	//Gson gson = new Gson();
+		//String response = gson.toJson(server);
+    	String response = gson.toJson(server);
         
         ex.sendResponseHeaders(200, response.getBytes(Charset.forName("UTF-8")).length);
         OutputStream os = ex.getResponseBody();
