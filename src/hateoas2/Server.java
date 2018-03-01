@@ -15,7 +15,7 @@ public class Server extends ResourceSupport {
     private transient Gson gson;
     private static Link link = new Link("/");
     private transient Screws screws;
-    public String testJson;
+    public transient String testJson;
 
     
 
@@ -49,5 +49,23 @@ public class Server extends ResourceSupport {
         this.builder = new GsonBuilder();
         this.builder.setPrettyPrinting();
         this.gson = this.builder.create();
+    }
+    
+    public String testGetStatusOfScrews() {
+    	return gson.toJson(screws.getStatus());
+    }
+    
+    public String testGetScrews() {
+    	return gson.toJson(screws);
+    }
+    
+    public String testTightenScrew(int i) {
+    	screws.getScrew(i).tighten();
+    	return gson.toJson(screws.getScrew(i));
+    }
+    
+    public String testLoosenScrew(int i) {
+    	screws.getScrew(i).loosen();
+    	return gson.toJson(screws.getScrew(i));
     }
 }
