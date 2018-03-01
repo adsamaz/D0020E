@@ -42,12 +42,13 @@ public class Screws extends ResourceSupport {
     	for (int i = 0; i < this.screws.length; i++) {
     		if (screwId == this.screws[i].id) {
     			return this.screws[screwId];
-
     		}
     	}
-    	
     	return null;
-    	
+    }
+    
+    public Screw[] getScrewList() {
+    	return this.screws;
     }
     
     public ScrewStatus getStatus() {

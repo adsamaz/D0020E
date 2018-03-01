@@ -1,70 +1,54 @@
 package hateoas2;
 
-import org.springframework.hateoas.*;
-
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.sun.net.httpserver.HttpServer;
-
-import java.lang.reflect.Modifier;
+import java.io.IOException;
 import java.net.InetSocketAddress;
 
-import static java.lang.reflect.Modifier.*;
+import org.springframework.hateoas.Link;
 
-import java.io.IOException;
+import com.sun.net.httpserver.HttpServer;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.util.EntityUtils;
-import org.json.JSONObject;
-import org.json.XML;
-
-
-public class Server extends ResourceSupport {
-
-    private transient GsonBuilder builder;
-    private transient Gson gson;
-    public static Link link = new Link("/");
-    private transient Screws screws;
-    
+public class Server {
 	
-	 
-
-    public Server (){
+	HttpServer httpServer;
+	Engine engine;
+	
+	public Server() {
+		
+		
+		this.engine = new Engine();
+    	try {
+    		httpServer = HttpServer.create(new InetSocketAddress("localhost", 8000), 0);
+    	} catch (IOException e) {
+    		e.printStackTrace();
+    	}
+       	createPath();
+    	//createContext("/second", "StartPoint", "http://localhost:8000/"); //obs allt efter /second gills, om det inte finns ett annat context för det t.ex /secondfhdf gills.
+    	httpServer.setExecutor(null); //default executor	
+    	httpServer.start();
     	
+	}
+	
+    private void createContext(String path, String json) {
+    	httpServer.createContext(path, new Handler(json));
+    }
+    
+    private void createPath() {
+    	createContext(engine.getLink().getHref(), engine.getJson(engine));	
+    	createContext(engine.getScrews().getLink().getHref(), engine.getJson(engine.getScrews()));
+    	createContext(engine.getScrews().getStatus().getLink().getHref(), engine.getJson(engine.getScrews().getStatus()));
     	
-        this.add(new Link("/"));
-        this.add(Screws.getLink());
-
-        this.initGSON();
-
-        this.screws = new Screws(5, link);
-        
-        //System.out.println(gson.toJson(this));
-        //System.out.println(gson.toJson(screws));
-        //System.out.println(gson.toJson(screws.getScrew(2)));
-        //screws.getScrew(2).tighten();
-        //System.out.println(gson.toJson(screws.getStatus()));
-        //System.out.println(gson.toJson(screws.getScrew(2)));
-        //screws.getScrew(2).loosen();
-        //System.out.println(gson.toJson(screws.getScrew(2)));
+    	for (Screw i : engine.getScrews().getScrewList()){
+    		
+        	System.out.println(i.getLink().getHref());
+        	createContext(i.getLink().getHref(), engine.getJson(i));
+    	}
 
 
     }
-
-
-
-    private void initGSON() {
-        this.builder = new GsonBuilder();
-        this.builder.setPrettyPrinting();
-        this.gson = this.builder.create();
+    
+    public static void main(String[] args) {
+    	Server coolserver = new Server();
     }
     
-    
-
 
 }
