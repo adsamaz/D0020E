@@ -9,14 +9,21 @@ import java.util.Set;
 import org.apache.http.StatusLine;
 import org.json.JSONObject;
 
+import arrowhead_test.ArrowheadConsumer;
 import communicationTest.ServerResponse;
 import hateoas2.Server;
 
 public class Consumer {
 	Server testServer;
+	String serverAddress;
+	ArrowheadConsumer arrowheadConsumer;
+	public String provider = "provider";
 	
 	public Consumer() {
 		testServer = new Server();
+		arrowheadConsumer = new ArrowheadConsumer();
+		serverAddress = arrowheadConsumer.http("http://130.240.5.102:8045/servicediscovery/service/"+provider, "URI");
+		System.out.println(serverAddress);
 	}
 	
 	public Map<String, String> parseRel(JSONObject jsonObj){

@@ -16,9 +16,9 @@ public class ArrowheadProvider {
 	//Strängen som publishar provider
 	String bodyPublish = "<service>"+
 	 "<domain>docker.ahf.</domain>"+
-	 "<host>130.240.113.2</host>"+
+	 "<host>130.240.5.102</host>"+
 	 "<name>provider</name>"+
-	 "<port>8045</port>"+
+	 "<port>8000</port>"+
 	 "<properties>"+
 	    "<property>"+
 	      "<name>version</name>"+
@@ -26,7 +26,7 @@ public class ArrowheadProvider {
 	    "</property>"+
 	    "<property>"+
 	       "<name>path</name>"+
-	       "<value>/provider</value>"+
+	       "<value>/</value>"+
 	    "</property>"+
 	 "</properties>"+
 	 "<type>_pvd-s-ws-http._tcp</type>"+
