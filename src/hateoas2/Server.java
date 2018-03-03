@@ -22,14 +22,17 @@ public class Server {
     		e.printStackTrace();
     	}
        	createPath();
-    	//createContext("/second", "StartPoint", "http://localhost:8000/"); //obs allt efter /second gills, om det inte finns ett annat context för det t.ex /secondfhdf gills.
     	httpServer.setExecutor(null); //default executor	
     	httpServer.start();
     	
 	}
 	
-    private void createContext(String path, String json) {
-    	httpServer.createContext(path, new Handler(json));
+    private void createContext(String path, String json, String action) {
+    	httpServer.createContext(path, new Handler(json, action));
+    }
+    
+    private void createContext(String path, String json) { //Metod overloading, now it's possible to send the optional parameter "action"
+    	createContext(path, json, "default");
     }
     
     private void createPath() {
@@ -37,10 +40,12 @@ public class Server {
     	createContext(engine.getScrews().getLink().getHref(), engine.getJson(engine.getScrews()));
     	createContext(engine.getScrews().getStatus().getLink().getHref(), engine.getJson(engine.getScrews().getStatus()));
     	
+    	int index = 0;
     	for (Screw i : engine.getScrews().getScrewList()){
-    		
-        	System.out.println(i.getLink().getHref());
         	createContext(i.getLink().getHref(), engine.getJson(i));
+        	
+        	//example with new parameter
+        	createContext(i.getLink().getHref() + "/tighten", "You are now tightening the screw: " + index++, "tighten");
     	}
 
 
