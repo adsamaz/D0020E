@@ -5,38 +5,58 @@ import java.io.OutputStream;
 import java.nio.charset.Charset;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
  class Handler implements HttpHandler {
 	 private String json;
 	 private String action;
-	 private Screw screw;
+	 private Object object;
 	 
-	 public Handler(String json, String action) {
-		 this.json = json;
+	 private GsonBuilder builder;
+	 private Gson gson;
+	 
+	 public Handler(Object object, String action) {
+		 this.object = object;
 		 this.action = action;
-		 this.screw = screw;
+		 
+		 initGSON();
 	 }
-	 public Handler(String json) {//Overloading, now it's possible to receive either 1 or 2 parameters
-		 this(json, "default");
+	 public Handler(Object object) {//Overloading, now it's possible to receive either 1 or 2 parameters
+		 this(object, "default");
 	 }
 	 
-    public void handle(HttpExchange ex) throws IOException {    	
+    public void handle(HttpExchange ex) throws IOException {   	
     	if(action.equals("tighten")) {
-    		//call tighten within the right screw
-    		System.out.println("tighten");
-    		screw.tighten();
-    		ex.getResponseHeaders().set("Location", "/screws/0"); //Rewrite response header
+    		String get = ex.getRequestURI().getQuery(); // If there is a parameter. Example, /tighten?40
+    		
+    		if(get.matches("\\d+")) {			
+    			((Screw) object).tighten(Integer.parseInt(get));
+    		}
+    		else {
+    			((Screw) object).tighten();
+    		}
+    		
+    		ex.getResponseHeaders().set("Location", ((Screw) object).getHref().getHref()); //Rewrite response header
     		ex.sendResponseHeaders(302, -1);// 302 = found, it will redirect. -1, no response body length is specified it can't be written
-    		
-    		
-    		//String get = ex.getRequestURI().getQuery();  If we want to handle get parameters. Example, /tighten?40
     	}
     	else if(action.equals("loosen")) {
-    		//call loosen within the right screw
+    		String get = ex.getRequestURI().getQuery();
+    		
+    		if(get.matches("\\d+")) {			
+    			((Screw) object).loosen(Integer.parseInt(get));
+    		}
+    		else {
+    			((Screw) object).loosen();
+    		}
+    		
+    		ex.getResponseHeaders().set("Location", ((Screw) object).getHref().getHref());
+    		ex.sendResponseHeaders(302, -1);
     	}
-    	else if(action.equals("default")) {   	   		
+    	else if(action.equals("default")) {
+    		
+    		json = getJson(object);
     		ex.sendResponseHeaders(200, json.getBytes(Charset.forName("UTF-8")).length); //200 = status code ok, antal bytes i body
     		OutputStream os = ex.getResponseBody();
             os.write(json.getBytes(Charset.forName("UTF-8")));
@@ -45,5 +65,15 @@ import com.sun.net.httpserver.HttpHandler;
     	else {
     		System.out.println("Something went wrong with the action in handler");
     	}
+    }
+    
+    public String getJson(Object object) {
+		return gson.toJson(object);	
+    }
+    
+    private void initGSON() {
+        this.builder = new GsonBuilder();
+        this.builder.setPrettyPrinting();
+        this.gson = this.builder.create();
     }
 }

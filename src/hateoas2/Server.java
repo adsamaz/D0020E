@@ -2,9 +2,7 @@ package hateoas2;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
-
 import org.springframework.hateoas.Link;
-
 import com.sun.net.httpserver.HttpServer;
 
 public class Server {
@@ -27,25 +25,23 @@ public class Server {
     	
 	}
 	
-    private void createContext(String path, String json, String action) {
-    	httpServer.createContext(path, new Handler(json, action));
+	private void createContext(String path, Object object, String action) {
+    	httpServer.createContext(path, new Handler(object, action));
     }
     
-    private void createContext(String path, String json) { //Metod overloading, now it's possible to send the optional parameter "action"
-    	createContext(path, json, "default");
+    private void createContext(String path, Object object) { //Method overloading, now it's possible to send the optional parameter "action"
+    	createContext(path, object, "default");
     }
     
     private void createPath() {
-    	createContext(engine.getLink().getHref(), engine.getJson(engine));	
-    	createContext(engine.getScrews().getLink().getHref(), engine.getJson(engine.getScrews()));
-    	createContext(engine.getScrews().getStatus().getHref().getHref(), engine.getJson(engine.getScrews().getStatus()));
-    	System.out.println(engine.getScrews().getStatus().getLink().getHref());
-    	int index = 0;
+    	createContext(engine.getLink().getHref(), engine);	
+    	createContext(engine.getScrews().getLink().getHref(), engine.getScrews());
+    	createContext(engine.getScrews().getStatus().getHref().getHref(), engine.getScrews().getStatus());
+
     	for (Screw i : engine.getScrews().getScrewList()){
-        	createContext(i.getHref().getHref(), engine.getJson(i));
-        	
-        	//example with new parameter
-        	createContext(i.getHref().getHref() + "/tighten", "You are now tightening the screw: " + index++, "tighten");
+        	createContext(i.getHref().getHref(), i);	
+        	createContext(i.getHref().getHref() + "/tighten", i, "tighten");
+        	createContext(i.getHref().getHref() + "/loosen", i, "loosen"); //Bör ändra texten till variabler
     	}
 
 
