@@ -1,5 +1,7 @@
 package consumer;
 
+import java.net.URL;
+import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -8,6 +10,7 @@ import java.util.Set;
 
 import org.apache.http.StatusLine;
 import org.json.JSONObject;
+import org.apache.commons.io.IOUtils;
 
 import arrowhead_test.ArrowheadConsumer;
 import communicationTest.ServerResponse;
@@ -22,8 +25,9 @@ public class Consumer {
 	public Consumer() {
 		testServer = new Server();
 		arrowheadConsumer = new ArrowheadConsumer();
-		serverAddress = arrowheadConsumer.http("http://130.240.5.102:8045/servicediscovery/service/"+provider, "URI");
-		System.out.println(serverAddress);
+		//serverAddress = arrowheadConsumer.http("http://130.240.5.102:8045/servicediscovery/service/"+provider, "URI"); //RUN With arrowhead
+		serverAddress = "localhost:8000"; //RUN Locally
+		JSONObject json = new JSONObject(IOUtils.toString(new URL("https://graph.facebook.com/me"), Charset.forName("UTF-8")));
 	}
 	
 	public Map<String, String> parseRel(JSONObject jsonObj){
