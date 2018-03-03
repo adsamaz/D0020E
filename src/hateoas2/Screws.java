@@ -30,6 +30,7 @@ public class Screws extends ResourceSupport {
         for (int i = 0; i < this.screws.length; i++) {
             this.screws[i] = new Screw(this.href);
             this.add(new Link(this.screws[i].getHref().getHref(), Integer.toString(this.screws[i].getId2())));
+            //System.out.println(this.screws[i].getHref().getHref());
         }
     }
 

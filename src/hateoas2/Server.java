@@ -38,14 +38,14 @@ public class Server {
     private void createPath() {
     	createContext(engine.getLink().getHref(), engine.getJson(engine));	
     	createContext(engine.getScrews().getLink().getHref(), engine.getJson(engine.getScrews()));
-    	createContext(engine.getScrews().getStatus().getLink().getHref(), engine.getJson(engine.getScrews().getStatus()));
-    	
+    	createContext(engine.getScrews().getStatus().getHref().getHref(), engine.getJson(engine.getScrews().getStatus()));
+    	System.out.println(engine.getScrews().getStatus().getLink().getHref());
     	int index = 0;
     	for (Screw i : engine.getScrews().getScrewList()){
-        	createContext(i.getLink().getHref(), engine.getJson(i));
+        	createContext(i.getHref().getHref(), engine.getJson(i));
         	
         	//example with new parameter
-        	createContext(i.getLink().getHref() + "/tighten", "You are now tightening the screw: " + index++, "tighten");
+        	createContext(i.getHref().getHref() + "/tighten", "You are now tightening the screw: " + index++, "tighten");
     	}
 
 

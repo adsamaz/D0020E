@@ -11,10 +11,12 @@ import com.sun.net.httpserver.HttpHandler;
  class Handler implements HttpHandler {
 	 private String json;
 	 private String action;
+	 private Screw screw;
 	 
 	 public Handler(String json, String action) {
 		 this.json = json;
 		 this.action = action;
+		 this.screw = screw;
 	 }
 	 public Handler(String json) {//Overloading, now it's possible to receive either 1 or 2 parameters
 		 this(json, "default");
@@ -24,7 +26,7 @@ import com.sun.net.httpserver.HttpHandler;
     	if(action.equals("tighten")) {
     		//call tighten within the right screw
     		System.out.println("tighten");
-    		
+    		screw.tighten();
     		ex.getResponseHeaders().set("Location", "/screws/0"); //Rewrite response header
     		ex.sendResponseHeaders(302, -1);// 302 = found, it will redirect. -1, no response body length is specified it can't be written
     		

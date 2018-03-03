@@ -19,12 +19,13 @@ public class Screw extends ResourceSupport {
     public Screw(Link baseLink) {
         this.id = nextID++;
         this.appliedTorqueNM = 0;
-        this.link = new Link(baseLink.getHref() + "/" + this.id, "" + this.id);
+        this.link = new Link("/" + this.id, "" + this.id);
 
         this.baseLink = baseLink;
     	
+        System.out.println(this.baseLink.getHref());
     	this.href = new Link(baseLink.getHref() + this.link.getHref());
-    	
+    	System.out.println(this.href);
         updateLinks();
     }
     
