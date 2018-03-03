@@ -1,19 +1,22 @@
 package consumer;
 
+import java.io.IOException;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Scanner;
-import java.util.Set;
 
-import org.apache.http.StatusLine;
-import org.json.JSONObject;
 import org.apache.commons.io.IOUtils;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.util.EntityUtils;
+import org.json.JSONObject;
+import org.json.XML;
 
 import arrowhead_test.ArrowheadConsumer;
-import communicationTest.ServerResponse;
 import hateoas2.Server;
 
 public class Consumer {
@@ -21,15 +24,30 @@ public class Consumer {
 	String serverAddress;
 	ArrowheadConsumer arrowheadConsumer;
 	public String provider = "provider";
+	JSONObject json;
 	
 	public Consumer() {
 		testServer = new Server();
 		arrowheadConsumer = new ArrowheadConsumer();
 		//serverAddress = arrowheadConsumer.http("http://130.240.5.102:8045/servicediscovery/service/"+provider, "URI"); //RUN With arrowhead
 		serverAddress = "localhost:8000"; //RUN Locally
-		JSONObject json = new JSONObject(IOUtils.toString(new URL("https://graph.facebook.com/me"), Charset.forName("UTF-8")));
-	}
+		getServerResponse(serverAddress);
+		
+		 
+	 }
 	
+	public JSONObject getServerResponse(String url){
+		HttpGet request = new HttpGet(url);
+		request.addHeader("content-type", "application/json");
+		
+		try (CloseableHttpClient httpClient = HttpClientBuilder.create().build()) {
+			HttpResponse result = httpClient.execute(request);
+			return new JSONObject(result);
+	    } catch (IOException ex) {
+	        ex.printStackTrace();
+	    }
+		return null;
+	}
 	public Map<String, String> parseRel(JSONObject jsonObj){
 		Map<String, String> relHrefs = new HashMap<String, String>();
 		
