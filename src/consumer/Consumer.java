@@ -25,13 +25,14 @@ public class Consumer {
 	ArrowheadConsumer arrowheadConsumer;
 	public String provider = "provider";
 	JSONObject json;
+	Map<String, String> relHrefs;
 	
 	public Consumer() {
-		testServer = new Server();
+		//testServer = new Server();
 		arrowheadConsumer = new ArrowheadConsumer();
 		//serverAddress = arrowheadConsumer.http("http://130.240.5.102:8045/servicediscovery/service/"+provider, "URI"); //RUN With arrowhead
 		serverAddress = "localhost:8000"; //RUN Locally
-		getServerResponse(serverAddress);
+		json = getServerResponse(serverAddress);
 		
 		 
 	 }
@@ -43,13 +44,14 @@ public class Consumer {
 		try (CloseableHttpClient httpClient = HttpClientBuilder.create().build()) {
 			HttpResponse result = httpClient.execute(request);
 			return new JSONObject(result);
+			
 	    } catch (IOException ex) {
 	        ex.printStackTrace();
 	    }
 		return null;
 	}
 	public Map<String, String> parseRel(JSONObject jsonObj){
-		Map<String, String> relHrefs = new HashMap<String, String>();
+		relHrefs = new HashMap<String, String>();
 		
 		for (int i = 0; i < jsonObj.getJSONArray("links").length(); i++) {
 			String rel = jsonObj.getJSONArray("links").getJSONObject(i).getString("rel");
@@ -62,9 +64,9 @@ public class Consumer {
 
 	private void chooseAndPerformAction() {
 		printMenu();
-		String input = getNextInput();
-		
-		switch (input) {
+		String input = getNextInput();	//Here the choice is made
+		getServerResponse(serverAddress + relHrefs.get(input)); 
+		/*switch (input) {
 		case "1":
 			tightenAllScrews();
 			break;
@@ -84,7 +86,8 @@ public class Consumer {
 		default:
 			System.out.println("Input must be 1,2,3,4,5");
 			break;
-		}
+		}*/
+		//getServerResponse(serverAddress + relHrefs.get(relHref))
 	}
 
 	private String getNextInput() {
@@ -94,13 +97,20 @@ public class Consumer {
 	}
 
 	private void printMenu() {
-		System.out.println("\nType number of the choice you want.");
-		System.out.println("1: Tighten all screws.");
-		System.out.println("2: Loosen all screws.");
-		System.out.println("3: Status of screws.");
-		System.out.println("4: Tighten screw...");
-		System.out.println("5: Loosen screw...");
-		System.out.print("Choice: ");
+		System.out.println("\nType the choice you want.");
+		Map<String, String> relHrefs = parseRel(json);
+		//int i = 0;
+		for (String relHref : relHrefs.keySet()) {
+			System.out.println("Rel: " + relHref + ". Link: " + relHrefs.get(relHref));
+		}
+		
+		//System.out.println("\nType number of the choice you want.");
+		//System.out.println("1: Tighten all screws.");
+		//System.out.println("2: Loosen all screws.");
+		//System.out.println("3: Status of screws.");
+		//System.out.println("4: Tighten screw...");
+		//System.out.println("5: Loosen screw...");
+		//System.out.print("Choice: ");
 	}
 	
 	private void tightenAllScrews() {
