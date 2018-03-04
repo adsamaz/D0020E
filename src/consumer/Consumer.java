@@ -16,6 +16,7 @@ import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.XML;
 
@@ -31,8 +32,8 @@ public class Consumer {
 	
 	public Consumer() {
 		arrowheadConsumer = new ArrowheadConsumer();
-		//serverAddress = arrowheadConsumer.http("http://130.240.5.102:8045/servicediscovery/service/"+provider, "URI"); //RUN With arrowhead
-		serverAddress = "http://localhost:8000"; //RUN Locally
+		serverAddress = arrowheadConsumer.http("http://130.240.5.102:8045/servicediscovery/service/"+provider, "URI"); //RUN With arrowhead
+		//serverAddress = "http://localhost:8001"; //RUN Locally
 		provider = "provider";
 		json = getServerResponse(serverAddress);
 	 }
@@ -80,10 +81,10 @@ public class Consumer {
 	private void printMenu() {
 		Iterator<String> keys = json.keys();
 
-		while( keys.hasNext() ) {	//first, print all json keys/values
+		while( keys.hasNext() ) {
 		    String key = keys.next();
-		    if ( json.get(key) instanceof JSONObject ) {
-		         System.out.println(key + ": " + json.getJSONObject(key));
+		    if ( !(json.get(key) instanceof JSONArray) ) {
+		    	System.out.println(key + ": " + json.get(key));
 		    }
 		}
 		System.out.println("\nType the choice you want.");	//Print all available choices from the HATEOAS link array
