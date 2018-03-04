@@ -29,10 +29,12 @@ public class ArrowheadConsumer {
     		if(responseType == "URI"){
     			JSONObject json = XML.toJSONObject(xmlResponse);
             	String host = json.getJSONObject("service").getString("host");
+            	host = host.substring(0, host.length() - 1);
             	int port = json.getJSONObject("service").getInt("port");
-            	String path = json.getJSONObject("service").getJSONObject("properties").getJSONArray("property").getJSONObject(1).getString("value");
-            	String uri = host + ":" + port + path;
-                System.out.println(uri);
+            	//String path = json.getJSONObject("service").getJSONObject("properties").getJSONArray("property").getJSONObject(1).getString("value");
+            	return host + ":" + port;
+                //System.out.println(host);
+                //System.out.println(port);
     		}
     		else{
     			System.out.println(xmlToJson(xmlResponse));

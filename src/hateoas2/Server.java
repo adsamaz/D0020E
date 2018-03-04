@@ -4,14 +4,26 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 import org.springframework.hateoas.Link;
 import com.sun.net.httpserver.HttpServer;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 public class Server {
 	
 	HttpServer httpServer;
 	Engine engine;
+
+    private transient GsonBuilder builder;
+    private transient Gson gson;
+    private static Link link = new Link("/");
+    private transient Screws screws;
+    public transient String testJson;
 	
 	public Server() {
-		
+
+        this.initGSON();
+
+        this.screws = new Screws(5, link);
+        this.testJson = gson.toJson(this);
 		
 		this.engine = new Engine();
     	try {
@@ -22,7 +34,6 @@ public class Server {
        	createPath();
     	httpServer.setExecutor(null); //default executor	
     	httpServer.start();
-    	
 	}
 	
 	private void createContext(String path, Object object, String action) {
@@ -34,22 +45,42 @@ public class Server {
     }
     
     private void createPath() {
-    	createContext(engine.getLink().getHref(), engine);	
-    	createContext(engine.getScrews().getLink().getHref(), engine.getScrews());
-    	createContext(engine.getScrews().getStatus().getHref().getHref(), engine.getScrews().getStatus());
+        createContext(engine.getLink().getHref(), engine);
+        createContext(engine.getScrews().getLink().getHref(), engine.getScrews());
+        createContext(engine.getScrews().getStatus().getHref().getHref(), engine.getScrews().getStatus());
 
-    	for (Screw i : engine.getScrews().getScrewList()){
-        	createContext(i.getHref().getHref(), i);	
-        	createContext(i.getHref().getHref() + "/tighten", i, "tighten");
-        	createContext(i.getHref().getHref() + "/loosen", i, "loosen"); //Bör ändra texten till variabler
-    	}
-
-
+        for (Screw i : engine.getScrews().getScrewList()) {
+            createContext(i.getHref().getHref(), i);
+            createContext(i.getHref().getHref() + "/tighten", i, "tighten");
+            createContext(i.getHref().getHref() + "/loosen", i, "loosen"); //Bï¿½r ï¿½ndra texten till variabler
+        }
     }
     
     public static void main(String[] args) {
     	Server coolserver = new Server();
     }
-    
 
+    private void initGSON() {
+        this.builder = new GsonBuilder();
+        this.builder.setPrettyPrinting();
+        this.gson = this.builder.create();
+    }
+    
+    public String testGetStatusOfScrews() {
+    	return gson.toJson(screws.getStatus());
+    }
+    
+    public String testGetScrews() {
+    	return gson.toJson(screws);
+    }
+    
+    public String testTightenScrew(int i) {
+    	screws.getScrew(i).tighten();
+    	return gson.toJson(screws.getScrew(i));
+    }
+    
+    public String testLoosenScrew(int i) {
+    	screws.getScrew(i).loosen();
+    	return gson.toJson(screws.getScrew(i));
+    }
 }
