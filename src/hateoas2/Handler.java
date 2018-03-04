@@ -28,10 +28,14 @@ import com.sun.net.httpserver.HttpHandler;
 	 }
 	 
     public void handle(HttpExchange ex) throws IOException {   	
-    	if(action.equals("tighten")) {
+    	if(action.equals("tighten")) {  		
     		String get = ex.getRequestURI().getQuery(); // If there is a parameter. Example, /tighten?40
+    		System.out.println("Get: " + get);
     		
-    		if(get.matches("\\d+")) {			
+    		if(get == null) {	//Need this in case of null, it doesn't reach else
+    			((Screw) object).tighten();
+    		}    		
+    		else if(get.matches("\\d+")) {
     			((Screw) object).tighten(Integer.parseInt(get));
     		}
     		else {
@@ -43,8 +47,12 @@ import com.sun.net.httpserver.HttpHandler;
     	}
     	else if(action.equals("loosen")) {
     		String get = ex.getRequestURI().getQuery();
+    		System.out.println("Get: " + get);
     		
-    		if(get.matches("\\d+")) {			
+    		if(get == null) {	//Need this in case of null, it doesn't reach else
+    			((Screw) object).loosen();
+    		}    		
+    		else if(get.matches("\\d+")) {
     			((Screw) object).loosen(Integer.parseInt(get));
     		}
     		else {

@@ -29,8 +29,6 @@ public class Screw extends ResourceSupport {
     	if (appliedTorqueNM != 100) {
         	appliedTorqueNM = 100;
         	updateLinks();
-//        	this.observable.setChanged2();
-//        	this.observable.notifyObservers();
     	}
     }
     
@@ -41,8 +39,6 @@ public class Screw extends ResourceSupport {
         		appliedTorqueNM = 100;
         	}
         	updateLinks();
-//        	this.observable.setChanged2();
-//        	this.observable.notifyObservers();
     	}
     }
 
@@ -50,8 +46,6 @@ public class Screw extends ResourceSupport {
     	if (this.appliedTorqueNM != 0) {
     		appliedTorqueNM = 0;
         	updateLinks();
-//        	this.observable.setChanged2();
-//        	this.observable.notifyObservers();
     	}
     }
     
@@ -62,8 +56,6 @@ public class Screw extends ResourceSupport {
         		appliedTorqueNM = 0;
         	}
         	updateLinks();
-//        	this.observable.setChanged2();
-//        	this.observable.notifyObservers();
     	}
     }
     
