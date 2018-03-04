@@ -22,6 +22,7 @@ public class Screws extends ResourceSupport {
 		this.add(new Link(this.baseLink.getHref(), "parent"));
         this.initScrews(numOfScrews);
         this.status = new ScrewStatus(this.screws, this.href);
+        this.add(new Link(this.status.getHref().getHref(), "screwStatus"));
         Screw.addObs(status);
     }
 
