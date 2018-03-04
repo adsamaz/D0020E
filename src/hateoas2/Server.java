@@ -2,7 +2,6 @@ package hateoas2;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
-import org.springframework.hateoas.Link;
 import com.sun.net.httpserver.HttpServer;
 
 public class Server {
