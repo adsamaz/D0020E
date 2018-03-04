@@ -8,7 +8,7 @@ import com.google.gson.Gson;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
- class Handler implements HttpHandler {
+class Handler implements HttpHandler {
 	 String type;
 	 String href;
 	 

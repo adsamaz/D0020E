@@ -12,43 +12,51 @@ public class Screw extends ResourceSupport {
     protected int id;
     protected double appliedTorqueNM;
     private transient Link href;
-    private transient Link baseLink;
-    
+    private transient Link baseLink;   
     private transient Link link;
 
     public Screw(Link baseLink) {
         this.id = nextID++;
         this.appliedTorqueNM = 0;
         this.link = new Link("/" + this.id, "" + this.id);
+        this.baseLink = baseLink;    	
+    	this.href = new Link(baseLink.getHref() + this.link.getHref());
 
-        this.baseLink = baseLink;
-    	if(baseLink.getHref().equals("/")) {
-    		this.href = new Link(this.link.getHref());
-    	} else {
-    		this.href = new Link(baseLink.getHref() + this.link.getHref());
-    	}
-    	
         updateLinks();
     }
     
     public void tighten() {
-    	if (this.appliedTorqueNM != 100) {
-        	this.appliedTorqueNM = 100;
+    	if (appliedTorqueNM != 100) {
+        	appliedTorqueNM = 100;
         	updateLinks();
-        	this.observable.setChanged2();
-        	this.observable.notifyObservers();
     	}
-
     }
     
+    public void tighten(int add) {
+    	if (appliedTorqueNM != 100) {
+        	appliedTorqueNM += add;
+        	if(appliedTorqueNM > 100) {
+        		appliedTorqueNM = 100;
+        	}
+        	updateLinks();
+    	}
+    }
+
     public void loosen() {
     	if (this.appliedTorqueNM != 0) {
-        	this.appliedTorqueNM = 0;
+    		appliedTorqueNM = 0;
         	updateLinks();
-        	this.observable.setChanged2();
-        	this.observable.notifyObservers();
     	}
-
+    }
+    
+    public void loosen(int sub) {
+    	if (this.appliedTorqueNM != 0) {
+    		appliedTorqueNM -= sub;
+        	if(appliedTorqueNM < 0) {
+        		appliedTorqueNM = 0;
+        	}
+        	updateLinks();
+    	}
     }
     
     private void updateLinks() {
@@ -64,6 +72,8 @@ public class Screw extends ResourceSupport {
     		this.add(new Link(this.href.getHref() + "/loosen", "loosen"));
 
     	}
+    	this.observable.setChanged2();
+    	this.observable.notifyObservers();
     }
 
     public Link getLink() {
