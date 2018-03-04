@@ -32,9 +32,11 @@ public class Consumer {
 	
 	public Consumer() {
 		arrowheadConsumer = new ArrowheadConsumer();
-		serverAddress = arrowheadConsumer.http("http://130.240.5.102:8045/servicediscovery/service/"+provider, "URI"); //RUN With arrowhead
-		//serverAddress = "http://localhost:8001"; //RUN Locally
 		provider = "provider";
+		//serverAddress = "http://" + arrowheadConsumer.http("http://130.240.5.102:8045/servicediscovery/service/"+provider, "URI"); //RUN With arrowhead
+		serverAddress = "http://localhost:8000"; //RUN Locally
+		
+		System.out.println(serverAddress);
 		json = getServerResponse(serverAddress);
 	 }
 	
