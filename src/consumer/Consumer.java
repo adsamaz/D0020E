@@ -64,4 +64,39 @@ public class Consumer {
 
 		return relHrefs;
 	}
+	
+	private void chooseAndPerformAction() {
+		printMenu();
+		String input = getNextInput();	//Here the choice is made
+		json = getServerResponse(serverAddress + relHrefs.get(input)); 
+	}
+
+	private String getNextInput() {
+		Scanner scanner = new Scanner(System.in);
+		String input = scanner.nextLine();
+		return input;
+	}
+
+	private void printMenu() {
+		Iterator<String> keys = json.keys();
+
+		while( keys.hasNext() ) {	//first, print all json keys/values
+		    String key = keys.next();
+		    if ( json.get(key) instanceof JSONObject ) {
+		         System.out.println(key + ": " + json.getJSONObject(key));
+		    }
+		}
+		System.out.println("\nType the choice you want.");	//Print all available choices from the HATEOAS link array
+		relHrefs = parseRel(json);
+		for (String relHref : relHrefs.keySet()) {
+			System.out.println("Rel: " + relHref + ". Link: " + relHrefs.get(relHref));
+		}
+	}
+	public static void main(String[] args) {
+		Consumer consumer = new Consumer();
+
+		while (true) {
+			consumer.chooseAndPerformAction();
+		}
+	}
 }
