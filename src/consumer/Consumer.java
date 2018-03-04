@@ -10,7 +10,9 @@ import java.util.Scanner;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpResponse;
+import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
@@ -30,7 +32,7 @@ public class Consumer {
 	public Consumer() {
 		arrowheadConsumer = new ArrowheadConsumer();
 		//serverAddress = arrowheadConsumer.http("http://130.240.5.102:8045/servicediscovery/service/"+provider, "URI"); //RUN With arrowhead
-		serverAddress = "localhost:8000"; //RUN Locally
+		serverAddress = "http://localhost:8000"; //RUN Locally
 		provider = "provider";
 		json = getServerResponse(serverAddress);
 	 }
@@ -40,8 +42,10 @@ public class Consumer {
 		request.addHeader("content-type", "application/json");
 		
 		try (CloseableHttpClient httpClient = HttpClientBuilder.create().build()) {
-			HttpResponse result = httpClient.execute(request);
-			return new JSONObject(result);
+			ResponseHandler<String> responseHandler = new BasicResponseHandler();
+	        String responseBody = httpClient.execute(request, responseHandler);
+	        JSONObject result = new JSONObject(responseBody);
+			return result;
 			
 	    } catch (IOException ex) {
 	        ex.printStackTrace();
@@ -50,6 +54,7 @@ public class Consumer {
 	}
 	public Map<String, String> parseRel(JSONObject jsonObj){
 		relHrefs = new HashMap<String, String>();
+		
 		
 		for (int i = 0; i < jsonObj.getJSONArray("links").length(); i++) {
 			String rel = jsonObj.getJSONArray("links").getJSONObject(i).getString("rel");
