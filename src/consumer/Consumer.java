@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -23,7 +24,7 @@ public class Consumer {
 	Server testServer;
 	String serverAddress;
 	ArrowheadConsumer arrowheadConsumer;
-	public String provider = "provider";
+	public String provider;
 	JSONObject json;
 	Map<String, String> relHrefs;
 	
@@ -32,9 +33,8 @@ public class Consumer {
 		arrowheadConsumer = new ArrowheadConsumer();
 		//serverAddress = arrowheadConsumer.http("http://130.240.5.102:8045/servicediscovery/service/"+provider, "URI"); //RUN With arrowhead
 		serverAddress = "localhost:8000"; //RUN Locally
+		provider = "provider";
 		json = getServerResponse(serverAddress);
-		
-		 
 	 }
 	
 	public JSONObject getServerResponse(String url){
@@ -65,7 +65,7 @@ public class Consumer {
 	private void chooseAndPerformAction() {
 		printMenu();
 		String input = getNextInput();	//Here the choice is made
-		getServerResponse(serverAddress + relHrefs.get(input)); 
+		json = getServerResponse(serverAddress + relHrefs.get(input)); 
 		/*switch (input) {
 		case "1":
 			tightenAllScrews();
@@ -97,8 +97,16 @@ public class Consumer {
 	}
 
 	private void printMenu() {
-		System.out.println("\nType the choice you want.");
-		Map<String, String> relHrefs = parseRel(json);
+		Iterator<String> keys = json.keys();
+
+		while( keys.hasNext() ) {	//first, print all json keys/values
+		    String key = keys.next();
+		    if ( json.get(key) instanceof JSONObject ) {
+		         System.out.println(key + ": " + json.getJSONObject(key));
+		    }
+		}
+		System.out.println("\nType the choice you want.");	//Print all available choices from the HATEOAS link array
+		relHrefs = parseRel(json);
 		//int i = 0;
 		for (String relHref : relHrefs.keySet()) {
 			System.out.println("Rel: " + relHref + ". Link: " + relHrefs.get(relHref));
@@ -113,6 +121,8 @@ public class Consumer {
 		//System.out.print("Choice: ");
 	}
 	
+	
+	//<<EVERYTHING BELOW THIS IS OLD AND NOT USED>>
 	private void tightenAllScrews() {
 		String json = testServer.testGetScrews();
 		//System.out.println(json);
