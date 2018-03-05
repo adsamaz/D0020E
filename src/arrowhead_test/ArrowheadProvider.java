@@ -18,7 +18,7 @@ public class ArrowheadProvider {
 	 "<domain>docker.ahf.</domain>"+
 	 "<host>130.240.5.102</host>"+
 	 "<name>provider</name>"+
-	 "<port>8000</port>"+
+	 "<port>8001</port>"+
 	 "<properties>"+
 	    "<property>"+
 	      "<name>version</name>"+

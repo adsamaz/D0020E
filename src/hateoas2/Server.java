@@ -12,7 +12,7 @@ public class Server {
 	public Server() {
 		this.engine = new Engine();
     	try {
-    		httpServer = HttpServer.create(new InetSocketAddress("localhost", 8000), 0);
+    		httpServer = HttpServer.create(new InetSocketAddress("localhost", 8001), 0);
     	} catch (IOException e) {
     		e.printStackTrace();
     	}
