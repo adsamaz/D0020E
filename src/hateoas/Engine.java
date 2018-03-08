@@ -1,4 +1,4 @@
-package hateoas2;
+package hateoas;
 
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.ResourceSupport;

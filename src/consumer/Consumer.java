@@ -1,6 +1,6 @@
 package consumer;
 
-import arrowhead_test.ArrowheadConsumer;
+import arrowhead.ArrowheadConsumer;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.BasicResponseHandler;

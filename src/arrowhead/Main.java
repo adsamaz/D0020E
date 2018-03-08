@@ -1,4 +1,4 @@
-package arrowhead_test;
+package arrowhead;
 
 public class Main {
     public static void main(String[] args) {

@@ -1,4 +1,4 @@
-package hateoas2;
+package hateoas;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

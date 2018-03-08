@@ -1,4 +1,4 @@
-package hateoas2;
+package hateoas;
 
 import java.util.Observable;
 
