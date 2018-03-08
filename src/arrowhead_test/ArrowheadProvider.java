@@ -35,7 +35,7 @@ public class ArrowheadProvider {
 	 "<service>"+
 	 "<name>provider</name>"+
 	 "</service>";
-	
+
 	// Publish or unpublish the Arrowhead provider to the Arrowhead Service Registry
 	public String http(String url, String action) {
 		String body;
