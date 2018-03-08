@@ -11,8 +11,8 @@ import org.json.XML;
 import java.io.IOException;
 
 public class ArrowheadConsumer {
-	
-	
+
+
 	public String http(String url, String responseType) {
 
         try (CloseableHttpClient httpClient = HttpClientBuilder.create().build()) {
@@ -22,17 +22,13 @@ public class ArrowheadConsumer {
     		
     		HttpResponse result = httpClient.execute(request);
     		String xmlResponse = EntityUtils.toString(result.getEntity(), "UTF-8");
-    		
-    		
-    		if(responseType == "URI"){
+
+    		if(responseType.equals("URI")){
     			JSONObject json = XML.toJSONObject(xmlResponse);
             	String host = json.getJSONObject("service").getString("host");
             	host = host.substring(0, host.length() - 1);
             	int port = json.getJSONObject("service").getInt("port");
-            	//String path = json.getJSONObject("service").getJSONObject("properties").getJSONArray("property").getJSONObject(1).getString("value");
             	return host + ":" + port;
-                //System.out.println(host);
-                //System.out.println(port);
     		}
     		else{
     			System.out.println(xmlToJson(xmlResponse));
