@@ -9,7 +9,8 @@ public class Server {
 	
 	HttpServer httpServer;
 	Engine engine;
-	
+
+	// Currently only hosts local server. Make some changes to use ArrowheadProvider if server should register itself with the Arrowhead Service Registry
 	public Server() {
 		this.engine = new Engine();
     	try {
@@ -30,7 +31,8 @@ public class Server {
     private void createContext(String path, Object object) { //Method overloading, now it's possible to send the optional parameter "action"
     	createContext(path, object, "default");
     }
-    
+
+    // Create all paths to all engine states
     private void createPath() {
         createContext(engine.getLink().getHref(), engine);
         createContext(engine.getScrews().getLink().getHref(), engine.getScrews());

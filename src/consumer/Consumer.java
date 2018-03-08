@@ -98,7 +98,7 @@ public class Consumer {
 	}
 	public static void main(String[] args) {
 		Consumer consumer = new Consumer();
-		
+
 		while (true) {
 			consumer.chooseAndPerformAction();
 		}

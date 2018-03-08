@@ -15,10 +15,12 @@ public class Screw extends ResourceSupport {
     private transient Link link;
 
     public Screw(Link baseLink) {
+    	// Generate unique screw id
         this.id = nextID++;
         this.appliedTorqueNM = 0;
-        this.link = new Link("/" + this.id, "" + this.id);
-        this.baseLink = baseLink;    	
+		// Add "self" rel with this state's href
+		this.link = new Link("/" + this.id, "" + this.id);
+        this.baseLink = baseLink;
     	this.href = new Link(baseLink.getHref() + this.link.getHref());
 
         updateLinks();
@@ -57,7 +59,8 @@ public class Screw extends ResourceSupport {
         	updateLinks();
     	}
     }
-    
+
+    // Update each time torque is changed to keep available links relevant
     private void updateLinks() {
 		this.removeLinks();
 		this.add(this.href);
@@ -71,6 +74,8 @@ public class Screw extends ResourceSupport {
     		this.add(new Link(this.href.getHref() + "/loosen", "loosen"));
 
     	}
+
+    	// Update screwstatus
     	this.observable.setChanged2();
     	this.observable.notifyObservers();
     }
