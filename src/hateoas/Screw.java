@@ -1,12 +1,14 @@
 package hateoas;
-import org.springframework.hateoas.*;
+
+import org.springframework.hateoas.Link;
+import org.springframework.hateoas.ResourceSupport;
 
 
 public class Screw extends ResourceSupport {
     public int screwId;
     public double Tightened;
      
-    //Konstruktor för att se till så att alla variabler är satta korrekt
+    //Konstruktor fï¿½r att se till sï¿½ att alla variabler ï¿½r satta korrekt
     public Screw(int Id) {
 
 

@@ -1,5 +1,7 @@
 package hateoas;
-import org.springframework.hateoas.*;
+
+import org.springframework.hateoas.Link;
+import org.springframework.hateoas.ResourceSupport;
 
 public class Index extends ResourceSupport {
 	

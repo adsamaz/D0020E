@@ -1,14 +1,12 @@
 package hateoas2;
 
-import java.util.Dictionary;
+import org.springframework.hateoas.Link;
+import org.springframework.hateoas.ResourceSupport;
+
 import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
-
-import org.springframework.hateoas.Link;
-import org.springframework.hateoas.ResourceSupport;
 
 public class ScrewStatus extends ResourceSupport implements Observer {
 	

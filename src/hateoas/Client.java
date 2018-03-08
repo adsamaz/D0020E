@@ -1,5 +1,6 @@
 package hateoas;
-import org.springframework.hateoas.*;
+
+import org.springframework.hateoas.Link;
 
 /*
  * The client receives the JSON which stores the index of available options for the client.

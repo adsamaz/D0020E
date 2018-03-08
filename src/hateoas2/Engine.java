@@ -1,27 +1,7 @@
 package hateoas2;
 
-import org.springframework.hateoas.*;
-
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.sun.net.httpserver.HttpServer;
-
-import java.lang.reflect.Modifier;
-import java.net.InetSocketAddress;
-
-import static java.lang.reflect.Modifier.*;
-
-import java.io.IOException;
-
-import org.apache.http.HttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.util.EntityUtils;
-import org.json.JSONObject;
-import org.json.XML;
+import org.springframework.hateoas.Link;
+import org.springframework.hateoas.ResourceSupport;
 
 
 public class Engine extends ResourceSupport {

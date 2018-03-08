@@ -1,10 +1,9 @@
 package hateoas;
-import java.util.ArrayList;
-
-import org.springframework.hateoas.*;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
+import java.util.ArrayList;
 
 /*
  * This is the Server which will snewTorquee the status of the screwdriver and its screws.

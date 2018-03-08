@@ -10,14 +10,12 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONObject;
 import org.json.XML;
 
-import com.google.gson.Gson;
-
 import java.io.IOException;
 
 public class GsonOther {
     public static void main(String[] args) {
     	
-    	//Strängen som publishar simpleservicediscovery
+    	//Strï¿½ngen som publishar simpleservicediscovery
     	String bodyPublish = "<service>"+
     	 "<domain>docker.ahf.</domain>"+
     	 "<host>simpleservicediscovery.docker.ahf.</host>"+
@@ -40,7 +38,7 @@ public class GsonOther {
     	//String bodyPublish = gson.toJson(testService);
     	//System.out.println(bodyPublish);
     	
-    	//Strängen som unpublishar simpleservicediscovery
+    	//Strï¿½ngen som unpublishar simpleservicediscovery
     	String bodyUnPublish = 
     	 "<service>"+
     	 "<name>simpleservicediscovery._ssd-s-ws-http._tcp.srv.docker.ahf.</name>"+

@@ -1,14 +1,9 @@
 package communicationTest;
 
-import java.io.IOException;
-import java.io.OutputStream;
-import java.net.InetSocketAddress;
-import java.nio.charset.Charset;
-
-import com.google.gson.Gson;
-import com.sun.net.httpserver.HttpExchange;
-import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
+
+import java.io.IOException;
+import java.net.InetSocketAddress;
 
 public class ServerResponse {
 	 HttpServer server;
@@ -20,8 +15,8 @@ public class ServerResponse {
 			e.printStackTrace();
 		}
     	
-    	createContext("/", "SecondPoint", "http://localhost:8000/second"); //Första addressen skapar json meddelande som hänvisar till nästa address 		
-    	createContext("/second", "StartPoint", "http://localhost:8000/"); //obs allt efter /second gills, om det inte finns ett annat context för det t.ex /secondfhdf gills.
+    	createContext("/", "SecondPoint", "http://localhost:8000/second"); //Fï¿½rsta addressen skapar json meddelande som hï¿½nvisar till nï¿½sta address 		
+    	createContext("/second", "StartPoint", "http://localhost:8000/"); //obs allt efter /second gills, om det inte finns ett annat context fï¿½r det t.ex /secondfhdf gills.
     	server.setExecutor(null); //default executor	
         server.start();
 	 }

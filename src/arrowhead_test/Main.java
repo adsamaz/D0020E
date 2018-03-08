@@ -1,12 +1,5 @@
 package arrowhead_test;
 
-import java.io.IOException;
-
-import org.apache.http.util.EntityUtils;
-import org.json.JSONArray;
-import org.json.JSONObject;
-import org.json.XML;
-
 public class Main {
 	public static void main(String[] args) {
 		String serviceName = "provider";

@@ -1,8 +1,9 @@
 package hateoas2;
 
+import com.sun.net.httpserver.HttpServer;
+
 import java.io.IOException;
 import java.net.InetSocketAddress;
-import com.sun.net.httpserver.HttpServer;
 
 public class Server {
 	

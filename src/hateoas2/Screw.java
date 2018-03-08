@@ -1,10 +1,9 @@
 package hateoas2;
 
-import java.util.Observable;
-import java.util.Observer;
-
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.ResourceSupport;
+
+import java.util.Observer;
 
 public class Screw extends ResourceSupport {
     private static int nextID = 0;

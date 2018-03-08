@@ -1,8 +1,5 @@
 package communicationTest;
 
-import java.net.*;
-import java.io.*;
-
 class JsonObject{
 	private String type;
 	private String rel;

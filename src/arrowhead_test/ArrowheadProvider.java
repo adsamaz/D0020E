@@ -1,19 +1,16 @@
 package arrowhead_test;
 
-import java.io.IOException;
-
 import org.apache.http.HttpResponse;
-import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
-import org.json.JSONObject;
-import org.json.XML;
+
+import java.io.IOException;
 
 public class ArrowheadProvider {
-	//Strängen som publishar provider
+	//Strï¿½ngen som publishar provider
 	String bodyPublish = "<service>"+
 	 "<domain>docker.ahf.</domain>"+
 	 "<host>130.240.5.102</host>"+
@@ -32,7 +29,7 @@ public class ArrowheadProvider {
 	 "<type>_pvd-s-ws-http._tcp</type>"+
 	"</service>";
 	
-	//Strängen som unpublishar simpleservicediscovery
+	//Strï¿½ngen som unpublishar simpleservicediscovery
 	String bodyUnPublish = 
 	 "<service>"+
 	 "<name>provider</name>"+
