@@ -13,13 +13,13 @@ public class Screws extends ResourceSupport {
 
     public Screws(int numOfScrews, Link baseLink) {
         // Link from parent state
-    	this.baseLink = baseLink;
-    	// Used to prevent this.href from having a double slash at start e.g. '//screws' instead of '/screws'
-    	if(baseLink.getHref().equals("/")) {
-    		this.href = new Link(this.link.getHref());
-    	} else {
-    		this.href = new Link(baseLink.getHref() + this.link.getHref());
-    	}
+        this.baseLink = baseLink;
+        // Used to prevent this.href from having a double slash at start e.g. '//screws' instead of '/screws'
+        if (baseLink.getHref().equals("/")) {
+            this.href = new Link(this.link.getHref());
+        } else {
+            this.href = new Link(baseLink.getHref() + this.link.getHref());
+        }
         // Add self rel with this state's href
         this.add(this.href);
         // Add parent rel with parent state's href
@@ -32,6 +32,10 @@ public class Screws extends ResourceSupport {
         Screw.addObs(status);
     }
 
+    public static Link getLink() {
+        return link;
+    }
+
     private void initScrews(int numOfScrews) {
         this.screws = new Screw[numOfScrews];
         for (int i = 0; i < this.screws.length; i++) {
@@ -42,25 +46,21 @@ public class Screws extends ResourceSupport {
         }
     }
 
-    public static Link getLink() {
-        return link;
+    public Screw getScrew(int screwId) {
+
+        for (int i = 0; i < this.screws.length; i++) {
+            if (screwId == this.screws[i].id) {
+                return this.screws[screwId];
+            }
+        }
+        return null;
     }
-    
-    public Screw getScrew (int screwId) {
-    	
-    	for (int i = 0; i < this.screws.length; i++) {
-    		if (screwId == this.screws[i].id) {
-    			return this.screws[screwId];
-    		}
-    	}
-    	return null;
-    }
-    
+
     public Screw[] getScrewList() {
-    	return this.screws;
+        return this.screws;
     }
-    
+
     public ScrewStatus getStatus() {
-    	return status;
+        return status;
     }
 }
